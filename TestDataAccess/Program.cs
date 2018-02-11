@@ -1,4 +1,4 @@
-﻿namespace DataDrivenTesting
+﻿namespace TestDataAccess
 {
     class Program
     {
