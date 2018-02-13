@@ -67,18 +67,30 @@ namespace TestDataAccess
         /// <param name="testDataIndex">Index of the test case in JSON file</param>
         /// <param name="directoryPath"></param>
         /// <param name="jsonFileName"></param>
+        /// <param name="testDataIsInArray">To check if the test data is in an array</param>
         public JSONReader(string directoryPath, string jsonFileName,
-            string testDataKey, int testDataIndex)
+            string testDataKey, int testDataIndex, bool testDataIsInArray)
         {
-            JObject testDataAtTestDataIndex =
-                (JObject)testData(directoryPath, jsonFileName, testDataKey, testDataIndex);
-            TestCaseValues = JsonConvert
-                .DeserializeObject<Dictionary<string, string>>(testDataAtTestDataIndex.ToString());
+            if (!testDataIsInArray)
+            {
+                JObject testDataAtTestDataIndex =
+                    (JObject)testData(directoryPath, jsonFileName, testDataKey, testDataIndex);
+                TestCaseValues = JsonConvert
+                    .DeserializeObject<Dictionary<string, string>>(testDataAtTestDataIndex.ToString());
+            }
+            else
+            {
+                JObject testDataAtTestDataIndex =
+                    (JObject)testData(directoryPath, jsonFileName, testDataKey, testDataIndex);
+                TestJsonArrayValues = JsonConvert
+                    .DeserializeObject<Dictionary<string, string[]>>(testDataAtTestDataIndex.ToString());
+            }
+
 
         }
 
         /// <summary>
-        /// Read a value from JSon Data Structure with indices having conbination of subnodes and no subnodes
+        /// Read a value from JSON Data Structure with Sub Objects and Sub Indexes
         /// </summary>
         /// <param name="directoryPath"></param>
         /// <param name="jsonFileName">Json File name in which Test data is present</param>  
@@ -102,6 +114,7 @@ namespace TestDataAccess
 
             }
         }
+
 
     }
 
