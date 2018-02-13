@@ -1,0 +1,15 @@
+﻿{
+    "Animals": [
+        "Dog",
+        "Cat",
+        "Mouse"
+    ],
+    "Bob": {
+        "Gender": "Male",
+        "Hair": "None"
+    },
+    "LoginInformation":  {
+        "UserName": "BestUserName",
+        "Password": "BestPassword"
+    }
+}
