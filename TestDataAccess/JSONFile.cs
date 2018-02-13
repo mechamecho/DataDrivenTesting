@@ -5,6 +5,14 @@
         public string Path { get; set; }
         private string _name;
 
+        public JSONFile(string path, string name)
+        {
+            if (path != null)
+                Path = path;
+            if (name != null)
+                _name = name;
+        }
+
         public void adjustJSONFilePath()
         {
             string corrdirectoryPath = Path +
