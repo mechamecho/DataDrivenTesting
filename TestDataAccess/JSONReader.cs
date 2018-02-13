@@ -2,12 +2,11 @@
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 
 namespace TestDataAccess
 {
-    class JSONReader
+    public class JSONReader
     {
         public static Dictionary<string, string[]> TestValues;
         public static Dictionary<string, string[]> TestJsonArrayValues;
@@ -29,16 +28,7 @@ namespace TestDataAccess
                 throw new ArgumentException("JSON File can't be null");
             }
 
-            jsonfile.adjustJSONFilePath();
-            using (StreamReader file = File.
-                OpenText(jsonfile.Path))
-            {
-                using (JsonTextReader reader = new JsonTextReader(file))
-                {
-                    return (JObject)JToken.ReadFrom(reader);
-                }
-            }
-
+            return (JObject)JToken.ReadFrom(jsonfile.JSONFileReader);
         }
 
         /// <summary>
