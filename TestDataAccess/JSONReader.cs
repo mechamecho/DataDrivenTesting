@@ -22,7 +22,7 @@ namespace TestDataAccess
         ///the requested test data
         /// </summary>
         /// <returns>JObject that represents the JSON file</returns>
-        private static JObject ConvertFileToJObject(JSONFile jsonfile)
+        private static JObject ConvertJSONFileToJObject(JSONFile jsonfile)
         {
             if (jsonfile == null)
             {
@@ -51,7 +51,7 @@ namespace TestDataAccess
         private JObject testData(JSONFile jsonFile,
             string testDataKey, int index)
         {
-            return (JObject)ConvertFileToJObject(jsonFile)
+            return (JObject)ConvertJSONFileToJObject(jsonFile)
                 .GetValue(testDataKey).ElementAt(index);
         }
 
