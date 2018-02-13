@@ -3,26 +3,25 @@
     public class JSONFile
     {
         public string Path { get; set; }
-        private string _name;
+        private readonly string _name;
 
         public JSONFile(string path, string name)
         {
             if (path != null)
-                Path = path;
+                Path = $"{path}{JSONFilePathValidation()}{_name}";
             if (name != null)
                 _name = name;
         }
 
-        public void adjustJSONFilePath()
+        private string JSONFilePathValidation()
         {
-            string corrdirectoryPath = Path +
-                                       (_name.Contains("QA Automation\\") ? "" : "\\QA Automation\\") +
-                                       (_name.Contains("TestCases\\") ?
-                                           "" : (_name.Contains("TestCase\\") ?
-                                               "" : (_name.Contains("TestData\\") ? "" : "TestData\\"))) +
-                                       _name;
-
-            Path = corrdirectoryPath;
+            var qaDirectory = "QA Automation\\";
+            var testDataDirectory = "TestData\\";
+            
+            return (_name.Contains(qaDirectory) ? "" : $"{qaDirectory}\\") +
+                    (_name.Contains("TestCases\\") ?
+                    "" : (_name.Contains("TestCase\\") ?
+                    "" : (_name.Contains(testDataDirectory) ? "" : testDataDirectory)));   
         }
     }
 }
