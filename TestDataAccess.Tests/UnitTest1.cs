@@ -68,4 +68,5 @@ namespace TestDataAccess.Tests
                 return new JSONFile(filePath);
             }
         }
+    }
 }

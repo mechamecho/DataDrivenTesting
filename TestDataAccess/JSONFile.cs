@@ -19,6 +19,11 @@ namespace TestDataAccess
             JSONFilePathValidation();
         }
 
+        public JSONFile()
+        {
+            JSONFilePathValidation();
+        }
+
         public JSONFile(string fullPath)
         {
             if (fullPath != null)
