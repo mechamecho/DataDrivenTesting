@@ -16,12 +16,12 @@ namespace TestDataAccess
             if (path != null)
                 Path = $"{path}{_name}";
 
-            JSONFilePathValidation();
+            //JSONFilePathValidation();
         }
 
         public JSONFile()
         {
-            JSONFilePathValidation();
+
         }
 
         public JSONFile(string fullPath)
@@ -34,7 +34,7 @@ namespace TestDataAccess
 
         private void JSONFilePathValidation()
         {
-            if (!Path.Contains("//") || !Path.Contains(".json"))
+            if (!Path.Contains("/") || !Path.Contains(".json"))
                 throw new FormatException("Path not in the correct format");
         }
 
