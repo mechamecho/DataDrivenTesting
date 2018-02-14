@@ -53,6 +53,15 @@ namespace TestDataAccess
                 .GetValue(testDataKey).ElementAt(index);
         }
 
+        public JSONReader(JSONFile jsonFile,
+            string testDataKey, int testDataIndex)
+        {
+            JObject testDataAtTestDataIndex =
+                (JObject)testData(jsonFile, testDataKey, testDataIndex);
+            TestCaseValues = JsonConvert
+                .DeserializeObject<Dictionary<string, string>>(testDataAtTestDataIndex.ToString());
+        }
+
         /// <summary>
         /// Constructor for a JSONReader to read the testCaseValues from a JSON File
         /// </summary>
@@ -62,17 +71,16 @@ namespace TestDataAccess
         public JSONReader(JSONFile jsonFile,
             string testDataKey, int testDataIndex, bool testDataIsInArray)
         {
+            JObject testDataAtTestDataIndex =
+                (JObject)testData(jsonFile, testDataKey, testDataIndex);
+
             if (!testDataIsInArray)
             {
-                JObject testDataAtTestDataIndex =
-                    (JObject)testData(jsonFile, testDataKey, testDataIndex);
                 TestCaseValues = JsonConvert
                     .DeserializeObject<Dictionary<string, string>>(testDataAtTestDataIndex.ToString());
             }
             else
             {
-                JObject testDataAtTestDataIndex =
-                    (JObject)testData(jsonFile, testDataKey, testDataIndex);
                 TestJsonArrayValues = JsonConvert
                     .DeserializeObject<Dictionary<string, string[]>>(testDataAtTestDataIndex.ToString());
             }
@@ -103,7 +111,6 @@ namespace TestDataAccess
 
             }
         }
-
 
     }
 
