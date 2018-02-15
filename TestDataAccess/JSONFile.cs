@@ -15,18 +15,18 @@ namespace TestDataAccess
                 _name = name;
             else
             {
-                throw new ArgumentException("File name can't be null");
+                throw new ArgumentException($"File name can't be null '{name}' .");
             }
 
             if (path != null)
                 FilePath = $"{path}{_name}";
             else
             {
-                throw new ArgumentException("File Path can't be null");
+                throw new ArgumentException($"File Path can't be null '{FilePath}' .");
             }
 
             if (!FilePathIsFullAndExists(FilePath))
-                throw new FormatException("File path is not in the correct format, or File doesn't exist.");
+                throw new FormatException($"File path is not in the correct format, or File doesn't exist '{FilePath}'.");
 
             //FilePathIsFullAndExists();
         }
@@ -42,7 +42,7 @@ namespace TestDataAccess
                 FilePath = fullPath;
             else
             {
-                throw new FormatException("File Path is not in the correct format or the File doesn't exist.");
+                throw new FormatException($"File Path is not in the correct format or the File doesn't exist {fullPath} .");
             }
 
             //FilePathIsFullAndExists();
