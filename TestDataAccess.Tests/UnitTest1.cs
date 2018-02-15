@@ -5,7 +5,7 @@ namespace TestDataAccess.Tests
     [TestFixture]
     public class JsonFile
     {
-        private const string RootDirectory = "//";
+        private const string RootDirectory = "C:\\Users\\Engineer\\Desktop\\Prep-eM\\Data-Driven-testing\\JsonReaderCsharp\\DataDrivenTesting\\TestDataAccess.Tests\\";
         private const string JsonFileName = "testData.json";
         private static readonly string FullFilePath = $"{RootDirectory}{JsonFileName}";
 
