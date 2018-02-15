@@ -1,10 +1,8 @@
-﻿using System;
-
-namespace TestDataAccess
+﻿namespace TestDataAccess
 {
     public class JSONFile
     {
-        public string Path { get; set; }
+        public string FilePath { get; set; }
         private readonly string _name;
 
 
@@ -14,7 +12,7 @@ namespace TestDataAccess
                 _name = name;
 
             if (path != null)
-                Path = $"{path}{_name}";
+                FilePath = $"{path}{_name}";
 
             //JSONFilePathValidation();
         }
@@ -27,15 +25,15 @@ namespace TestDataAccess
         public JSONFile(string fullPath)
         {
             if (fullPath != null)
-                Path = fullPath;
+                FilePath = fullPath;
 
-            JSONFilePathValidation();
+            //JSONFilePathValidation();
         }
 
         private void JSONFilePathValidation()
         {
-            if (!Path.Contains("/") || !Path.Contains(".json"))
-                throw new FormatException("Path not in the correct format");
+            //if (!FilePath.Contains("/") || !FilePath.Contains(".json"))
+            //    throw new FormatException("FilePath path not in the correct format");
         }
 
         //private string JSONFilePathValidation()

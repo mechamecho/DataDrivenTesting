@@ -30,7 +30,7 @@ namespace TestDataAccess
             }
 
             using (StreamReader file = File.
-                OpenText(jsonfile.Path))
+                OpenText(jsonfile.FilePath))
             {
                 using (JsonTextReader reader = new JsonTextReader(file))
                 {
