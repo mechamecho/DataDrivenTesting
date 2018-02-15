@@ -29,27 +29,20 @@ namespace TestDataAccess
         {
             if (fullPath != null && JSONFilePathValidation(fullPath))
                 FilePath = fullPath;
-
-            throw new FormatException("File Path is not in the correct format or the File doesn't exist.");
-
+            else
+            {
+                throw new FormatException("File Path is not in the correct format or the File doesn't exist.");
+            }
 
             //JSONFilePathValidation();
         }
 
         private bool JSONFilePathValidation(string fullPath)
         {
-            //if (!FilePath.Contains("/") || !FilePath.Contains(".json"))
-            //    throw new FormatException("FilePath path not in the correct format");
             string fileName = Path.GetFileName(fullPath);
-            if (Path.GetFullPath(fullPath) == fullPath)
-                Console.WriteLine("Ok");
-            if (Directory.Exists(fullPath.Replace(fileName, "")))
-            {
-                Console.WriteLine("ok");
 
+            if (Path.GetFullPath(fullPath) == fullPath && Directory.Exists(fullPath.Replace(fileName, "")))
                 return true;
-            }
-
             return false;
         }
 
