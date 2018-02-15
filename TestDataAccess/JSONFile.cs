@@ -50,11 +50,15 @@ namespace TestDataAccess
 
         private bool FilePathIsFullAndExists(string fullPath)
         {
-            string fileName = Path.GetFileName(fullPath);
-
-            if (Path.GetFullPath(fullPath) == fullPath && Directory.Exists(fullPath.Replace(fileName, "")))
+            if (Path.GetFullPath(fullPath) == fullPath &&
+                Directory.Exists(GetFilePathWithoutFileName(fullPath)))
                 return true;
             return false;
+        }
+
+        private string GetFilePathWithoutFileName(string fullPath)
+        {
+            return fullPath.Replace(Path.GetFileName(fullPath), "");
         }
 
         //private string FilePathIsFullAndExists()
