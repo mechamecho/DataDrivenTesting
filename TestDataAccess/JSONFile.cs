@@ -13,9 +13,20 @@ namespace TestDataAccess
         {
             if (name != null)
                 _name = name;
+            else
+            {
+                throw new ArgumentException("File name can't be null");
+            }
 
             if (path != null)
                 FilePath = $"{path}{_name}";
+            else
+            {
+                throw new ArgumentException("File Path can't be null");
+            }
+
+            if (!JSONFilePathValidation(FilePath))
+                throw new FormatException("File path is not in the correct format, or File doesn't exist.");
 
             //JSONFilePathValidation();
         }
