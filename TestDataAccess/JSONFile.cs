@@ -25,10 +25,10 @@ namespace TestDataAccess
                 throw new ArgumentException("File Path can't be null");
             }
 
-            if (!JSONFilePathValidation(FilePath))
+            if (!FilePathIsFullAndExists(FilePath))
                 throw new FormatException("File path is not in the correct format, or File doesn't exist.");
 
-            //JSONFilePathValidation();
+            //FilePathIsFullAndExists();
         }
 
         public JSONFile()
@@ -38,17 +38,17 @@ namespace TestDataAccess
 
         public JSONFile(string fullPath)
         {
-            if (fullPath != null && JSONFilePathValidation(fullPath))
+            if (fullPath != null && FilePathIsFullAndExists(fullPath))
                 FilePath = fullPath;
             else
             {
                 throw new FormatException("File Path is not in the correct format or the File doesn't exist.");
             }
 
-            //JSONFilePathValidation();
+            //FilePathIsFullAndExists();
         }
 
-        private bool JSONFilePathValidation(string fullPath)
+        private bool FilePathIsFullAndExists(string fullPath)
         {
             string fileName = Path.GetFileName(fullPath);
 
@@ -57,7 +57,7 @@ namespace TestDataAccess
             return false;
         }
 
-        //private string JSONFilePathValidation()
+        //private string FilePathIsFullAndExists()
         //{
         //    var qaDirectory = "QA Automation\\";
         //    var testDataDirectory = "TestData\\";
