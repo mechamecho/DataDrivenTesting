@@ -1,3 +1,6 @@
+using System;
+using System.IO;
+using System.Reflection;
 using NUnit.Framework;
 
 namespace TestDataAccess.Tests
@@ -5,9 +8,12 @@ namespace TestDataAccess.Tests
     [TestFixture]
     public class JsonFile
     {
-        private const string RootDirectory = "C:\\Users\\Engineer\\Desktop\\Prep-eM\\Data-Driven-testing\\JsonReaderCsharp\\DataDrivenTesting\\TestDataAccess.Tests\\";
+        private static readonly string SolutionBinary = System.AppContext.BaseDirectory;
+        private static readonly string SolutionName = "TestDataAccess.Tests";
+        private static readonly string RootDirectory = SolutionBinary.Substring(0, SolutionBinary.IndexOf(SolutionName) + SolutionName.Length);
+
         private const string JsonFileName = "testData.json";
-        private static readonly string FullFilePath = $"{RootDirectory}{JsonFileName}";
+        private static readonly string FullFilePath = $"{RootDirectory}{Path.DirectorySeparatorChar}{JsonFileName}";
 
         [TestCase]
         public void CanCreateEmptyJSONFile()
