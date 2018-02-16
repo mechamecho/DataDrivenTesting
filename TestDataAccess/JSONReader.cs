@@ -22,15 +22,15 @@ namespace TestDataAccess
         ///the requested test data
         /// </summary>
         /// <returns>JObject that represents the JSON file</returns>
-        private static JObject ConvertJSONFileToJObject(JSONFile jsonfile)
+        private static JObject ConvertJSONFileToJObject(JSONFile jsonFile)
         {
-            if (jsonfile == null)
+            if (jsonFile == null)
             {
-                throw new ArgumentException("JSON File can't be null");
+                throw new ArgumentException($"JSONFile, {nameof(jsonFile)} can't be null");
             }
 
             using (StreamReader file = File.
-                OpenText(jsonfile.FilePath))
+                OpenText(jsonFile.FilePath))
             {
                 using (JsonTextReader reader = new JsonTextReader(file))
                 {
@@ -56,8 +56,9 @@ namespace TestDataAccess
         public JSONReader(JSONFile jsonFile,
             string testDataKey, int testDataIndex)
         {
-            JObject testDataAtTestDataIndex =
-                (JObject)testData(jsonFile, testDataKey, testDataIndex);
+            var testDataAtTestDataIndex =
+                testData(jsonFile, testDataKey, testDataIndex);
+
             TestCaseValues = JsonConvert
                 .DeserializeObject<Dictionary<string, string>>(testDataAtTestDataIndex.ToString());
         }
