@@ -58,7 +58,7 @@ namespace TestDataAccess
 
         private string GetFilePathWithoutFileName(string fullPath)
         {
-            return fullPath.Replace(Path.GetFileName(fullPath), "");
+            return (Directory.GetParent(fullPath).ToString());
         }
 
         //private string FilePathIsFullAndExists()

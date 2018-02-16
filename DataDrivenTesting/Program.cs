@@ -8,6 +8,7 @@
             //    "C:\\Users\\Engineer\\Desktop\\Prep-eM\\Data-Driven-testing\\JsonReaderCsharp\\DataDrivenTesting\\TestDataAccess.Tests\\";
             //var name = "testData.json";
             //var fullyfullpath = $"{path}{name}";
+            //Console.WriteLine(Directory.GetParent(fullyfullpath));
             //var names = Path.GetFileName(fullyfullpath);
             //string fullpath =
             //    "C:\\Users\\Engineer\\Desktop\\Prep-eM\\Data-Driven-testing\\JsonReaderCsharp\\DataDrivenTesting\\TestDataAccess.Tests\\testData.json";
