@@ -13,6 +13,8 @@ namespace TestDataAccess
         public static Dictionary<string, string[]> TestJsonArrayValues;
         public static Dictionary<string, string> TestCaseValues;
         public static int ListCount;
+        public dynamic TestCase;
+        public string[] TestCaseArray;
 
         //To check if the file path matches the expected pattern, and modify it accordingly if it doesn't
 
@@ -56,10 +58,10 @@ namespace TestDataAccess
         public JSONReader(JSONFile jsonFile,
             string testDataKey, int testDataIndex)
         {
-            JObject testDataAtTestDataIndex =
-                (JObject)testData(jsonFile, testDataKey, testDataIndex);
-            TestCaseValues = JsonConvert
-                .DeserializeObject<Dictionary<string, string>>(testDataAtTestDataIndex.ToString());
+            JObject testData = ConvertJSONFileToJObject(jsonFile);
+
+            testData = JObject.Parse(testData.ToString());
+            TestCase = testData[$"'{testDataKey}'"][testDataIndex];
         }
 
         /// <summary>
