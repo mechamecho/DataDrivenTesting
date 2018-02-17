@@ -13,8 +13,6 @@ namespace TestDataAccess
         public static Dictionary<string, string[]> TestJsonArrayValues;
         public static Dictionary<string, string> TestCaseValues;
         public static int ListCount;
-        public dynamic TestCase;
-        public string[] TestCaseArray;
 
         //To check if the file path matches the expected pattern, and modify it accordingly if it doesn't
 
@@ -24,15 +22,15 @@ namespace TestDataAccess
         ///the requested test data
         /// </summary>
         /// <returns>JObject that represents the JSON file</returns>
-        private static JObject ConvertJSONFileToJObject(JSONFile jsonfile)
+        private static JObject ConvertJSONFileToJObject(JSONFile jsonFile)
         {
-            if (jsonfile == null)
+            if (jsonFile == null)
             {
-                throw new ArgumentException("JSON File can't be null");
+                throw new ArgumentException($"JSONFile, {nameof(jsonFile)} can't be null");
             }
 
             using (StreamReader file = File.
-                OpenText(jsonfile.FilePath))
+                OpenText(jsonFile.FilePath))
             {
                 using (JsonTextReader reader = new JsonTextReader(file))
                 {
@@ -58,10 +56,11 @@ namespace TestDataAccess
         public JSONReader(JSONFile jsonFile,
             string testDataKey, int testDataIndex)
         {
-            JObject testData = ConvertJSONFileToJObject(jsonFile);
+            var testDataAtTestDataIndex =
+                testData(jsonFile, testDataKey, testDataIndex);
 
-            testData = JObject.Parse(testData.ToString());
-            TestCase = testData[$"'{testDataKey}'"][testDataIndex];
+            TestCaseValues = JsonConvert
+                .DeserializeObject<Dictionary<string, string>>(testDataAtTestDataIndex.ToString());
         }
 
         /// <summary>
