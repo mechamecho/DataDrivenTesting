@@ -42,7 +42,7 @@ namespace TestDataAccess.Tests
 
             Assert.DoesNotThrow(() =>
             {
-                var jsonReader = CreateJSONReader(jsonFile, testDataKey, testDataIndex);
+                var jsonReader = CreateJSONReader(jsonFile);
             });
         }
 
@@ -53,14 +53,14 @@ namespace TestDataAccess.Tests
             var testDataKey = "Animals";
             var testDataIndex = 0;
 
-            var jsonReader = CreateJSONReader(jsonFile, testDataKey, testDataIndex);
+            var jsonReader = CreateJSONReader(jsonFile);
 
             Assert.Equals(jsonReader, "Dog");
         }
 
-        private static JSONReader CreateJSONReader(JSONFile jsonFile, string testDataKey, int testDataIndex)
+        private static JSONReader CreateJSONReader(JSONFile jsonFile)
         {
-            return new JSONReader(jsonFile, testDataKey, testDataIndex);
+            return new JSONReader(jsonFile);
         }
 
         private static JSONFile CreateJSONFile(string filePath)
