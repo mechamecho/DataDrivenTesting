@@ -143,5 +143,18 @@ namespace TestDataAccess
 
             return JsonObject;
         }
+
+        public List<string> ReadJsonObjectArray(string objectKey, string arrayKey)
+        {
+            var jObject = this.ConvertJSONFileToJObject();
+            var rootLevelJsonProperty = jObject.GetValue(objectKey);
+
+            var jTokenArray = rootLevelJsonProperty[arrayKey];
+
+            var finalArray = JsonConvert
+                .DeserializeObject<List<string>>(jTokenArray.ToString());
+
+            return finalArray;
+        }
     }
 }
