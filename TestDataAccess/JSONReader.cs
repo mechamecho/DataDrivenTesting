@@ -59,8 +59,8 @@ namespace TestDataAccess
             JObject testDataAtTestDataIndex =
                 (JObject)this.GetKeyAndIndexValueFromJObject(testDataKey, testDataIndex);
 
-                return JsonConvert
-                    .DeserializeObject<Dictionary<string, string[]>>(testDataAtTestDataIndex.ToString());
+            return JsonConvert
+                .DeserializeObject<Dictionary<string, string[]>>(testDataAtTestDataIndex.ToString());
         }
 
         /// <summary>
@@ -108,6 +108,19 @@ namespace TestDataAccess
             var element = value.ElementAt(index);
 
             return element.ToString();
+        }
+
+        public string GetJsonPropertyValue(string testDataKey)
+        {
+            var jObject = this.ConvertJSONFileToJObject();
+            var value = jObject.GetValue(testDataKey);
+
+            return value.ToString();
+        }
+
+        public string ReadSinglePropertyFromJSONFile(string propertyKey)
+        {
+            return GetJsonPropertyValue(propertyKey);
         }
     }
 }
