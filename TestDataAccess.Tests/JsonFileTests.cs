@@ -52,10 +52,13 @@ namespace TestDataAccess.Tests
             var jsonFile = new JSONFile(FullFilePath);
             var testDataKey = "Animals";
             var testDataIndex = 0;
+            var expectedValue = "Dog";
 
             var jsonReader = CreateJSONReader(jsonFile);
+            var testValue = jsonReader.GetJsonPropertyValue(testDataKey, testDataIndex);
 
-            Assert.Equals(jsonReader, "Dog");
+
+            Assert.AreEqual(testValue, expectedValue);
         }
 
         private static JSONReader CreateJSONReader(JSONFile jsonFile)
