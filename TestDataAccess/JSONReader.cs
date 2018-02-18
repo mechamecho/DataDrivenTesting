@@ -18,7 +18,7 @@ namespace TestDataAccess
             string testDataKey, int testDataIndex)
         {
             var testDataAtTestDataIndex =
-                testData(jsonFile, testDataKey, testDataIndex);
+                this.GetKeyAndIndexValueFromJObject(jsonFile, testDataKey, testDataIndex);
 
             TestCaseValues = JsonConvert
                 .DeserializeObject<Dictionary<string, string>>(testDataAtTestDataIndex.ToString());
@@ -34,7 +34,7 @@ namespace TestDataAccess
             string testDataKey, int testDataIndex, bool testDataIsInArray)
         {
             JObject testDataAtTestDataIndex =
-                (JObject)testData(jsonFile, testDataKey, testDataIndex);
+                (JObject)this.GetKeyAndIndexValueFromJObject(jsonFile, testDataKey, testDataIndex);
 
             if (!testDataIsInArray)
             {
@@ -62,7 +62,7 @@ namespace TestDataAccess
             {
 
                 JObject testDataAtTestDataSubIndex =
-                    (JObject)testData(jsonFile, testDataKey, testDataIndex)
+                    (JObject)this.GetKeyAndIndexValueFromJObject(jsonFile, testDataKey, testDataIndex)
                         .GetValue(subKey).ElementAt(subIndex);
                 TestCaseValues =
                     JsonConvert
@@ -101,12 +101,12 @@ namespace TestDataAccess
         /// <param name="testDataKey">key property for the testdata</param>
         /// <param name="index">Index of the testcase(s)</param>
         /// <returns></returns>
-        private JObject testData(JSONFile jsonFile,
+        private JObject GetKeyAndIndexValueFromJObject(JSONFile jsonFile,
             string testDataKey, int index)
         {
             return (JObject)ConvertJSONFileToJObject(jsonFile)
-                .GetValue(testDataKey).ElementAt(index);
+                .GetValue(testDataKey)
+                .ElementAt(index);
         }
     }
-
 }
