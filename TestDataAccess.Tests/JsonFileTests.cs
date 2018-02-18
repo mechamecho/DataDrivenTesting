@@ -1,4 +1,5 @@
 using NUnit.Framework;
+using System.Collections.Generic;
 using System.IO;
 
 namespace TestDataAccess.Tests
@@ -54,6 +55,23 @@ namespace TestDataAccess.Tests
             var jsonReader = CreateJSONReader(jsonFile);
             var testValue = jsonReader.ReadSinglePropertyFromJSONFile(testDataKey);
 
+
+            Assert.AreEqual(testValue, expectedValue);
+        }
+
+        [TestCase]
+        public void CanReadJSONArray()
+        {
+            var jsonFile = new JSONFile(FullFilePath);
+            var testDataKey = "Array";
+            var expectedValue = new List<string>(){
+                "Caitlyn",
+                "Quinn",
+                "Jinx",
+                "Kog'Maw"};
+
+            var jsonReader = CreateJSONReader(jsonFile);
+            var testValue = jsonReader.ReadJsonArray(testDataKey);
 
             Assert.AreEqual(testValue, expectedValue);
         }
