@@ -76,6 +76,29 @@ namespace TestDataAccess.Tests
             Assert.AreEqual(testValue, expectedValue);
         }
 
+        [Test]
+        public void CanReadJSONObjectWithProperty()
+        {
+            var jsonFile = new JSONFile(FullFilePath);
+            var jsonReader = new JSONReader(jsonFile);
+            var testDataKey = "ObjectWithProperty";
+            var expectedValue = new Dictionary<string, string>()
+            {
+                {
+                    "UserName", "quinnisgreat"
+
+                },
+
+                {
+                    "Password", "bestpassword"
+                }
+            };
+
+            var testValue = jsonReader.ReadJsonObject(testDataKey);
+
+            Assert.AreEqual(expectedValue, testValue);
+        }
+
         private static JSONReader CreateJSONReader(JSONFile jsonFile)
         {
             return new JSONReader(jsonFile);
