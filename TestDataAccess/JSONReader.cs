@@ -10,10 +10,6 @@ namespace TestDataAccess
     public class JSONReader
     {
         private JSONFile JsonFile;
-        public static Dictionary<string, string[]> TestValues;
-        public static Dictionary<string, string[]> TestJsonArrayValues;
-        public static Dictionary<string, string> TestCaseValues;
-        public static int ListCount;
 
         public JSONReader(JSONFile jsonFile)
         {
