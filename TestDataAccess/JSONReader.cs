@@ -133,5 +133,15 @@ namespace TestDataAccess
         {
             return GetJsonPropertyValue(propertyKey);
         }
+
+        public Dictionary<string, string> ReadJsonObject(string testDataKey)
+        {
+            var jObject = this.ConvertJSONFileToJObject();
+            var value = jObject.GetValue(testDataKey);
+            var JsonObject = JsonConvert
+                .DeserializeObject<Dictionary<string, string>>(value.ToString());
+
+            return JsonObject;
+        }
     }
 }
