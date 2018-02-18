@@ -6,7 +6,7 @@ using NUnit.Framework;
 namespace TestDataAccess.Tests
 {
     [TestFixture]
-    public class JsonFile
+    public class JsonFileTests
     {
         private static readonly string SolutionBinary = System.AppContext.BaseDirectory;
         private static readonly string SolutionName = "TestDataAccess.Tests";
@@ -42,7 +42,7 @@ namespace TestDataAccess.Tests
 
             Assert.DoesNotThrow(() =>
             {
-                var jsonReader = CreateJSONReader(jsonFile, testDataKey, testDataIndex);
+                var jsonReader = CreateJSONReader(jsonFile);
             });
         }
 
@@ -52,15 +52,18 @@ namespace TestDataAccess.Tests
             var jsonFile = new JSONFile(FullFilePath);
             var testDataKey = "Animals";
             var testDataIndex = 0;
+            var expectedValue = "Dog";
 
-            var jsonReader = CreateJSONReader(jsonFile, testDataKey, testDataIndex);
+            var jsonReader = CreateJSONReader(jsonFile);
+            var testValue = jsonReader.GetJsonPropertyValue(testDataKey, testDataIndex);
 
-            Assert.Equals(jsonReader, "Dog");
+
+            Assert.AreEqual(testValue, expectedValue);
         }
 
-        private static JSONReader CreateJSONReader(JSONFile jsonFile, string testDataKey, int testDataIndex)
+        private static JSONReader CreateJSONReader(JSONFile jsonFile)
         {
-            return new JSONReader(jsonFile, testDataKey, testDataIndex);
+            return new JSONReader(jsonFile);
         }
 
         private static JSONFile CreateJSONFile(string filePath)
