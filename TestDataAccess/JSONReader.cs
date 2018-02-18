@@ -9,72 +9,53 @@ namespace TestDataAccess
 {
     public class JSONReader
     {
+        private JSONFile JsonFile;
         public static Dictionary<string, string[]> TestValues;
         public static Dictionary<string, string[]> TestJsonArrayValues;
         public static Dictionary<string, string> TestCaseValues;
         public static int ListCount;
 
-        public JSONReader(JSONFile jsonFile,
-            string testDataKey, int testDataIndex)
+        public JSONReader(JSONFile jsonFile)
+        {
+            this.JsonFile = jsonFile;
+        }
+
+        /// <summary>
+        /// Returns a root level JSON collection value by specifying its key and collection index level.
+        /// </summary>
+        /// <param name="testDataKey"></param>
+        /// <param name="testDataIndex"></param>
+        /// <returns></returns>
+        public Dictionary<string, string> GetKeyAndIndexValue(string testDataKey, int testDataIndex)
         {
             var testDataAtTestDataIndex =
-                this.GetKeyAndIndexValueFromJObject(jsonFile, testDataKey, testDataIndex);
+                this.GetKeyAndIndexValueFromJObject(this.JsonFile, testDataKey, testDataIndex);
 
-            TestCaseValues = JsonConvert
+            return JsonConvert
                 .DeserializeObject<Dictionary<string, string>>(testDataAtTestDataIndex.ToString());
         }
 
-        /// <summary>
-        /// Constructor for a JSONReader to read the testCaseValues from a JSON File
-        /// </summary>
-        /// <param name="testDataKey"></param>
-        /// <param name="testDataIndex">Index of the test case in JSON file</param>
-        /// <param name="testDataIsInArray">To check if the test data is in an array</param>
-        public JSONReader(JSONFile jsonFile,
-            string testDataKey, int testDataIndex, bool testDataIsInArray)
+        public Dictionary<string, string> GetNestedKeyAndIndexValue(string testDataKey, int testDataIndex, string subKey, int subIndex)
         {
-            JObject testDataAtTestDataIndex =
-                (JObject)this.GetKeyAndIndexValueFromJObject(jsonFile, testDataKey, testDataIndex);
-
-            if (!testDataIsInArray)
-            {
-                TestCaseValues = JsonConvert
-                    .DeserializeObject<Dictionary<string, string>>(testDataAtTestDataIndex.ToString());
-            }
-            else
-            {
-                TestJsonArrayValues = JsonConvert
-                    .DeserializeObject<Dictionary<string, string[]>>(testDataAtTestDataIndex.ToString());
-            }
+            JObject testDataAtTestDataSubIndex =
+                (JObject)this.GetKeyAndIndexValueFromJObject(this.JsonFile, testDataKey, testDataIndex)
+                    .GetValue(subKey).ElementAt(subIndex);
+            return JsonConvert
+                    .DeserializeObject<Dictionary<string, string>>(testDataAtTestDataSubIndex.ToString());
         }
 
-        /// <summary>
-        /// Read a value from JSON Data Structure with Sub Objects and Sub Indexes
-        /// </summary> 
-        /// <param name="testDataKey">To access the value of the JSON property representing
-        /// the test data</param>
-        /// <param name="testDataIndex"></param>
-        /// <param name="subKey">to get the the value of the subKey in the JSON Object</param>
-        /// <param name="subIndex">Array Index of the value to be read in the subKey</param> 
-        public JSONReader(JSONFile jsonFile, string testDataKey,
-            int testDataIndex, string subKey, int subIndex)
+        public Dictionary<string, string[]> GetArrayThruKeyAndIndexValue(string testDataKey, int testDataIndex)
         {
-            {
+            JObject testDataAtTestDataIndex =
+                (JObject)this.GetKeyAndIndexValueFromJObject(this.JsonFile, testDataKey, testDataIndex);
 
-                JObject testDataAtTestDataSubIndex =
-                    (JObject)this.GetKeyAndIndexValueFromJObject(jsonFile, testDataKey, testDataIndex)
-                        .GetValue(subKey).ElementAt(subIndex);
-                TestCaseValues =
-                    JsonConvert
-                        .DeserializeObject<Dictionary<string, string>>(testDataAtTestDataSubIndex.ToString());
-                ListCount = TestCaseValues.Count;
-
-            }
+                return JsonConvert
+                    .DeserializeObject<Dictionary<string, string[]>>(testDataAtTestDataIndex.ToString());
         }
 
         /// <summary>
         /// To convert the JSON file contents to a JObject to use to to filter the JSON Object, and find the
-        ///the requested test data
+        /// the requested test data
         /// </summary>
         /// <returns>JObject that represents the JSON file</returns>
         private static JObject ConvertJSONFileToJObject(JSONFile jsonFile)
