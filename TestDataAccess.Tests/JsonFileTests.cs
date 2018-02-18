@@ -99,6 +99,25 @@ namespace TestDataAccess.Tests
             Assert.AreEqual(expectedValue, testValue);
         }
 
+        [Test]
+        public void CanReadJsonObjectArray()
+        {
+            var jsonFile = new JSONFile(FullFilePath);
+            var jsonReader = new JSONReader(jsonFile);
+            var objectKey = "ObjectWithAnArray";
+            var arrayKey = "ObjectArray";
+            var expectedValue = new List<string>()
+            {
+                "HealthPotion",
+                "InfinityEdge"
+            };
+
+            var testValue = jsonReader.ReadJsonObjectArray(objectKey, arrayKey);
+
+
+            Assert.AreEqual(expectedValue, testValue);
+        }
+
         private static JSONReader CreateJSONReader(JSONFile jsonFile)
         {
             return new JSONReader(jsonFile);
