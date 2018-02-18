@@ -35,6 +35,14 @@ namespace TestDataAccess
                 .DeserializeObject<Dictionary<string, string>>(testDataAtTestDataIndex.ToString());
         }
 
+        /// <summary>
+        /// Returns a nested level JSON collection value by specifying its key, collection index level and parent key and index.
+        /// </summary>
+        /// <param name="testDataKey"></param>
+        /// <param name="testDataIndex"></param>
+        /// <param name="subKey"></param>
+        /// <param name="subIndex"></param>
+        /// <returns></returns>
         public Dictionary<string, string> GetNestedKeyAndIndexValue(string testDataKey, int testDataIndex, string subKey, int subIndex)
         {
             JObject testDataAtTestDataSubIndex =
@@ -44,6 +52,12 @@ namespace TestDataAccess
                     .DeserializeObject<Dictionary<string, string>>(testDataAtTestDataSubIndex.ToString());
         }
 
+        /// <summary>
+        /// Returns a root level JSON collection value by specifying its key.
+        /// </summary>
+        /// <param name="testDataKey"></param>
+        /// <param name="testDataIndex"></param>
+        /// <returns></returns>
         public Dictionary<string, string[]> GetArrayThruKeyAndIndexValue(string testDataKey, int testDataIndex)
         {
             JObject testDataAtTestDataIndex =
