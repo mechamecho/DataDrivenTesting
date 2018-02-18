@@ -1,7 +1,5 @@
-using System;
-using System.IO;
-using System.Reflection;
 using NUnit.Framework;
+using System.IO;
 
 namespace TestDataAccess.Tests
 {
@@ -47,15 +45,14 @@ namespace TestDataAccess.Tests
         }
 
         [TestCase]
-        public void CanReadJSONReader()
+        public void CanReadJSONSingleProperty()
         {
             var jsonFile = new JSONFile(FullFilePath);
-            var testDataKey = "Animals";
-            var testDataIndex = 0;
-            var expectedValue = "Dog";
+            var testDataKey = "SingleProperty";
+            var expectedValue = "LeagueIsGreat";
 
             var jsonReader = CreateJSONReader(jsonFile);
-            var testValue = jsonReader.GetJsonPropertyValue(testDataKey, testDataIndex);
+            var testValue = jsonReader.ReadSinglePropertyFromJSONFile(testDataKey);
 
 
             Assert.AreEqual(testValue, expectedValue);
