@@ -6,7 +6,7 @@ using NUnit.Framework;
 namespace TestDataAccess.Tests
 {
     [TestFixture]
-    public class JsonFile
+    public class JsonFileTests
     {
         private static readonly string SolutionBinary = System.AppContext.BaseDirectory;
         private static readonly string SolutionName = "TestDataAccess.Tests";
