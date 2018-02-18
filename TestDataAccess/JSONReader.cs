@@ -25,7 +25,7 @@ namespace TestDataAccess
         public Dictionary<string, string> GetKeyAndIndexValue(string testDataKey, int testDataIndex)
         {
             var testDataAtTestDataIndex =
-                this.GetKeyAndIndexValueFromJObject(this.JsonFile, testDataKey, testDataIndex);
+                this.GetKeyAndIndexValueFromJObject(testDataKey, testDataIndex);
 
             return JsonConvert
                 .DeserializeObject<Dictionary<string, string>>(testDataAtTestDataIndex.ToString());
@@ -42,7 +42,7 @@ namespace TestDataAccess
         public Dictionary<string, string> GetNestedKeyAndIndexValue(string testDataKey, int testDataIndex, string subKey, int subIndex)
         {
             JObject testDataAtTestDataSubIndex =
-                (JObject)this.GetKeyAndIndexValueFromJObject(this.JsonFile, testDataKey, testDataIndex)
+                (JObject)this.GetKeyAndIndexValueFromJObject(testDataKey, testDataIndex)
                     .GetValue(subKey).ElementAt(subIndex);
             return JsonConvert
                     .DeserializeObject<Dictionary<string, string>>(testDataAtTestDataSubIndex.ToString());
@@ -57,7 +57,7 @@ namespace TestDataAccess
         public Dictionary<string, string[]> GetArrayThruKeyAndIndexValue(string testDataKey, int testDataIndex)
         {
             JObject testDataAtTestDataIndex =
-                (JObject)this.GetKeyAndIndexValueFromJObject(this.JsonFile, testDataKey, testDataIndex);
+                (JObject)this.GetKeyAndIndexValueFromJObject(testDataKey, testDataIndex);
 
                 return JsonConvert
                     .DeserializeObject<Dictionary<string, string[]>>(testDataAtTestDataIndex.ToString());
@@ -68,15 +68,14 @@ namespace TestDataAccess
         /// the requested test data
         /// </summary>
         /// <returns>JObject that represents the JSON file</returns>
-        private static JObject ConvertJSONFileToJObject(JSONFile jsonFile)
+        private JObject ConvertJSONFileToJObject()
         {
-            if (jsonFile == null)
+            if (this.JsonFile == null)
             {
-                throw new ArgumentException($"JSONFile, {nameof(jsonFile)} can't be null");
+                throw new ArgumentException($"JSONFile, {nameof(this.JsonFile)} can't be null");
             }
 
-            using (StreamReader file = File.
-                OpenText(jsonFile.FilePath))
+            using (StreamReader file = File.OpenText(this.JsonFile.FilePath))
             {
                 using (JsonTextReader reader = new JsonTextReader(file))
                 {
@@ -92,12 +91,23 @@ namespace TestDataAccess
         /// <param name="testDataKey">key property for the testdata</param>
         /// <param name="index">Index of the testcase(s)</param>
         /// <returns></returns>
-        private JObject GetKeyAndIndexValueFromJObject(JSONFile jsonFile,
+        private JObject GetKeyAndIndexValueFromJObject(
             string testDataKey, int index)
         {
-            return (JObject)ConvertJSONFileToJObject(jsonFile)
-                .GetValue(testDataKey)
-                .ElementAt(index);
+            var jObject = this.ConvertJSONFileToJObject();
+            var value = jObject.GetValue(testDataKey);
+            var element = value.ElementAt(index);
+
+            return (JObject)element;
+        }
+
+        public string GetJsonPropertyValue(string testDataKey, int index)
+        {
+            var jObject = this.ConvertJSONFileToJObject();
+            var value = jObject.GetValue(testDataKey);
+            var element = value.ElementAt(index);
+
+            return element.ToString();
         }
     }
 }
