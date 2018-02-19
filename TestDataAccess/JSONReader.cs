@@ -16,24 +16,24 @@ namespace TestDataAccess
             this.JsonFile = jsonFile;
         }
 
-        public string GetJsonPropertyValue(string testDataKey, int index)
+        public string GetJsonPropertyValue(string propertyKey, int index)
         {
-            var jsonProperty = GenerateJtokenFromJobject(testDataKey);
+            var jsonProperty = GenerateJtokenFromJobject(propertyKey);
             var element = jsonProperty.ElementAt(index);
 
             return element.ToString();
         }
 
-        public string GetJsonPropertyValue(string testDataKey)
+        public string GetJsonPropertyValue(string propertyKey)
         {
-            var jsonProperty = GenerateJtokenFromJobject(testDataKey);
+            var jsonProperty = GenerateJtokenFromJobject(propertyKey);
 
             return jsonProperty.ToString();
         }
 
-        public List<string> ReadJsonArray(string testDataKey)
+        public List<string> ReadJsonArray(string propertyKey)
         {
-            var jsonProperty = GenerateJtokenFromJobject(testDataKey);
+            var jsonProperty = GenerateJtokenFromJobject(propertyKey);
             var JsonArray = JsonConvert
                 .DeserializeObject<List<string>>(jsonProperty.ToString());
 
