@@ -16,51 +16,53 @@ namespace TestDataAccess
             this.JsonFile = jsonFile;
         }
 
-        /// <summary>
-        /// Returns a root level JSON collection value by specifying its key and collection index level.
-        /// </summary>
-        /// <param name="testDataKey"></param>
-        /// <param name="testDataIndex"></param>
-        /// <returns></returns>
-        public Dictionary<string, string> GetKeyAndIndexValue(string testDataKey, int testDataIndex)
+        public string GetJsonPropertyValue(string propertyKey, int index)
         {
-            var testDataAtTestDataIndex =
-                this.GetKeyAndIndexValueFromJObject(testDataKey, testDataIndex);
+            var jsonProperty = GenerateJtokenFromJobject(propertyKey);
+            var element = jsonProperty.ElementAt(index);
 
-            return JsonConvert
-                .DeserializeObject<Dictionary<string, string>>(testDataAtTestDataIndex.ToString());
+            return element.ToString();
         }
 
-        /// <summary>
-        /// Returns a nested level JSON collection value by specifying its key, collection index level and parent key and index.
-        /// </summary>
-        /// <param name="testDataKey"></param>
-        /// <param name="testDataIndex"></param>
-        /// <param name="subKey"></param>
-        /// <param name="subIndex"></param>
-        /// <returns></returns>
-        public Dictionary<string, string> GetNestedKeyAndIndexValue(string testDataKey, int testDataIndex, string subKey, int subIndex)
+        public string GetJsonPropertyValue(string propertyKey)
         {
-            JObject testDataAtTestDataSubIndex =
-                (JObject)this.GetKeyAndIndexValueFromJObject(testDataKey, testDataIndex)
-                    .GetValue(subKey).ElementAt(subIndex);
-            return JsonConvert
-                    .DeserializeObject<Dictionary<string, string>>(testDataAtTestDataSubIndex.ToString());
+            var jsonProperty = GenerateJtokenFromJobject(propertyKey);
+
+            return jsonProperty.ToString();
         }
 
-        /// <summary>
-        /// Returns a root level JSON collection value by specifying its key.
-        /// </summary>
-        /// <param name="testDataKey"></param>
-        /// <param name="testDataIndex"></param>
-        /// <returns></returns>
-        public Dictionary<string, string[]> GetArrayThruKeyAndIndexValue(string testDataKey, int testDataIndex)
+        public List<string> ReadJsonArray(string propertyKey)
         {
-            JObject testDataAtTestDataIndex =
-                (JObject)this.GetKeyAndIndexValueFromJObject(testDataKey, testDataIndex);
+            var jsonProperty = GenerateJtokenFromJobject(propertyKey);
+            var JsonArray = JsonConvert
+                .DeserializeObject<List<string>>(jsonProperty.ToString());
 
-                return JsonConvert
-                    .DeserializeObject<Dictionary<string, string[]>>(testDataAtTestDataIndex.ToString());
+            return JsonArray;
+        }
+
+        public string ReadSinglePropertyFromJSONFile(string propertyKey)
+        {
+            return GetJsonPropertyValue(propertyKey);
+        }
+
+        public Dictionary<string, string> ReadJsonObject(string propertyKey)
+        {
+            var jsonProperty = GenerateJtokenFromJobject(propertyKey);
+            var JsonObject = JsonConvert
+                .DeserializeObject<Dictionary<string, string>>(jsonProperty.ToString());
+
+            return JsonObject;
+        }
+
+        public List<string> ReadJsonObjectArray(string objectKey, string arrayKey)
+        {
+            var rootLevelJsonProperty = GenerateJtokenFromJobject(objectKey);
+            var jTokenArray = rootLevelJsonProperty[arrayKey];
+
+            var finalArray = JsonConvert
+                .DeserializeObject<List<string>>(jTokenArray.ToString());
+
+            return finalArray;
         }
 
         /// <summary>
@@ -84,30 +86,12 @@ namespace TestDataAccess
             }
         }
 
-        /// <summary>
-        /// To retrieve the unfiltered test data from the JSON File to use in the constructors for this class
-        /// </summary>
-        /// <param name="jsonFile">JSON file containing the test data</param>
-        /// <param name="testDataKey">key property for the testdata</param>
-        /// <param name="index">Index of the testcase(s)</param>
-        /// <returns></returns>
-        private JObject GetKeyAndIndexValueFromJObject(
-            string testDataKey, int index)
+        private JToken GenerateJtokenFromJobject(string objectKey)
         {
             var jObject = this.ConvertJSONFileToJObject();
-            var value = jObject.GetValue(testDataKey);
-            var element = value.ElementAt(index);
+            var rootLevelJsonProperty = jObject.GetValue(objectKey);
 
-            return (JObject)element;
-        }
-
-        public string GetJsonPropertyValue(string testDataKey, int index)
-        {
-            var jObject = this.ConvertJSONFileToJObject();
-            var value = jObject.GetValue(testDataKey);
-            var element = value.ElementAt(index);
-
-            return element.ToString();
+            return rootLevelJsonProperty;
         }
     }
 }

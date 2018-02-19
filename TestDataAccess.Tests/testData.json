@@ -1,15 +1,37 @@
 ﻿{
-    "Animals": [
-        "Dog",
-        "Cat",
-        "Mouse"
-    ],
-    "Bob": {
-        "Gender": "Male",
-        "Hair": "None"
+  "SingleProperty": "LeagueIsGreat",
+  "Array": [
+    "Caitlyn",
+    "Quinn",
+    "Jinx",
+    "Kog'Maw"
+  ],
+  "ObjectWithProperty": {
+    "UserName": "quinnisgreat",
+    "Password": "bestpassword" 
+  },
+  "ObjectWithAnArray": {
+    "ObjectArray": [
+      "HealthPotion",
+      "InfinityEdge"
+    ]
+  },
+  "ArrayOfObjects": [
+    {
+      "Name": "QuinnAndValor",
+      "Kingdom": {
+        "State": "Demacia",
+        "Street": "1 Eagle St",
+        "ZipCode": "02903"
+      }
     },
-    "LoginInformation":  {
-        "UserName": "BestUserName",
-        "Password": "BestPassword"
+    {
+      "Name": "Caitlyn",
+      "Kingdom": {
+        "State": "Piltover",
+        "Street": "1 Police Way",
+        "ZipCode": "02907"
+      }
     }
+  ]
 }

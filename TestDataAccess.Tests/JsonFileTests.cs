@@ -1,7 +1,6 @@
-using System;
-using System.IO;
-using System.Reflection;
 using NUnit.Framework;
+using System.Collections.Generic;
+using System.IO;
 
 namespace TestDataAccess.Tests
 {
@@ -47,18 +46,76 @@ namespace TestDataAccess.Tests
         }
 
         [TestCase]
-        public void CanReadJSONReader()
+        public void CanReadJSONSingleProperty()
         {
             var jsonFile = new JSONFile(FullFilePath);
-            var testDataKey = "Animals";
-            var testDataIndex = 0;
-            var expectedValue = "Dog";
+            var testDataKey = "SingleProperty";
+            var expectedValue = "LeagueIsGreat";
 
             var jsonReader = CreateJSONReader(jsonFile);
-            var testValue = jsonReader.GetJsonPropertyValue(testDataKey, testDataIndex);
+            var testValue = jsonReader.ReadSinglePropertyFromJSONFile(testDataKey);
 
 
             Assert.AreEqual(testValue, expectedValue);
+        }
+
+        [TestCase]
+        public void CanReadJSONArray()
+        {
+            var jsonFile = new JSONFile(FullFilePath);
+            var testDataKey = "Array";
+            var expectedValue = new List<string>(){
+                "Caitlyn",
+                "Quinn",
+                "Jinx",
+                "Kog'Maw"};
+
+            var jsonReader = CreateJSONReader(jsonFile);
+            var testValue = jsonReader.ReadJsonArray(testDataKey);
+
+            Assert.AreEqual(testValue, expectedValue);
+        }
+
+        [Test]
+        public void CanReadJSONObjectWithProperty()
+        {
+            var jsonFile = new JSONFile(FullFilePath);
+            var jsonReader = new JSONReader(jsonFile);
+            var testDataKey = "ObjectWithProperty";
+            var expectedValue = new Dictionary<string, string>()
+            {
+                {
+                    "UserName", "quinnisgreat"
+
+                },
+
+                {
+                    "Password", "bestpassword"
+                }
+            };
+
+            var testValue = jsonReader.ReadJsonObject(testDataKey);
+
+            Assert.AreEqual(expectedValue, testValue);
+        }
+
+        [Test]
+        public void CanReadJsonObjectArray()
+        {
+            var jsonFile = new JSONFile(FullFilePath);
+            var jsonReader = new JSONReader(jsonFile);
+            var objectKey = "ObjectWithAnArray";
+            var arrayKey = "ObjectArray";
+            var expectedValue = new List<string>()
+            {
+                "HealthPotion",
+                "InfinityEdge"
+            };
+
+            var testValue = jsonReader.ReadJsonObjectArray(objectKey, arrayKey);
+
+
+            Assert.AreEqual(expectedValue, testValue);
         }
 
         private static JSONReader CreateJSONReader(JSONFile jsonFile)
