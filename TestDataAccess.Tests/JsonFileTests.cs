@@ -1,10 +1,11 @@
-using Newtonsoft.Json.Linq;
 using NUnit.Framework;
-using System.Collections.Generic;
+using System;
 using System.IO;
 
 namespace TestDataAccess.Tests
 {
+
+
     [TestFixture]
     public class JsonFileTests
     {
@@ -16,153 +17,37 @@ namespace TestDataAccess.Tests
         private static readonly string FullFilePath = $"{RootDirectory}{Path.DirectorySeparatorChar}{JsonFileName}";
 
         [Test]
-        public void CanCreateEmptyJSONFile()
+        public static void PassingIncorrectPathToJsonFileRaisesException()
         {
-            Assert.DoesNotThrow(() =>
-            {
-                var jsonFile = CreateJSONFile("");
-            });
+            var fakePath = "C://banananananan";
+            Assert.Throws(typeof(FormatException), () => new JSONFile(fakePath));
         }
 
         [Test]
-        public void CanCreateNewJSONFile()
+        public static void PassingFolderAndNameCorrectlyDoesNotThrow()
         {
-            Assert.DoesNotThrow(() =>
-            {
-                var jsonFile = CreateJSONFile(FullFilePath);
-            });
+            var fileName = JsonFileName;
+            var folderPath = RootDirectory;
+
+            Assert.DoesNotThrow((() => new JSONFile(folderPath, fileName)));
         }
 
         [Test]
-        public void CanCreatesNewJSONReader()
+        public static void PassingNullFolderRaisesException()
         {
-            var jsonFile = CreateJSONFile(FullFilePath);
-            var testDataKey = "Animals";
-            var testDataIndex = 0;
+            string fileName = JsonFileName;
+            string folderPath = null;
 
-            Assert.DoesNotThrow(() =>
-            {
-                var jsonReader = CreateJSONReader(jsonFile);
-            });
+            Assert.Throws(typeof(ArgumentException), (() => new JSONFile(folderPath, fileName)));
         }
 
         [Test]
-        public void CanReadJSONSingleProperty()
+        public static void PassingNullFileNameRaisesException()
         {
-            var jsonFile = new JSONFile(FullFilePath);
-            var testDataKey = "SingleProperty";
-            var expectedValue = "LeagueIsGreat";
+            string fileName = null;
+            string folderPath = RootDirectory;
 
-            var jsonReader = CreateJSONReader(jsonFile);
-            var testValue = jsonReader.ReadSinglePropertyFromJSONFile(testDataKey);
-
-
-            Assert.AreEqual(testValue, expectedValue);
-        }
-
-        [Test]
-        public void CanReadJSONArray()
-        {
-            var jsonFile = new JSONFile(FullFilePath);
-            var testDataKey = "Array";
-            var expectedValue = new List<string>(){
-                "Caitlyn",
-                "Quinn",
-                "Jinx",
-                "Kog'Maw"};
-
-            var jsonReader = CreateJSONReader(jsonFile);
-            var testValue = jsonReader.ReadJsonArray(testDataKey);
-
-            Assert.AreEqual(testValue, expectedValue);
-        }
-
-        [Test]
-        public void CanReadJSONObjectWithProperty()
-        {
-            var jsonFile = new JSONFile(FullFilePath);
-            var jsonReader = new JSONReader(jsonFile);
-            var testDataKey = "ObjectWithProperty";
-            var expectedValue = new Dictionary<string, string>()
-            {
-                {
-                    "UserName", "quinnisgreat"
-
-                },
-
-                {
-                    "Password", "bestpassword"
-                }
-            };
-
-            var testValue = jsonReader.ReadJsonObject(testDataKey);
-
-            Assert.AreEqual(expectedValue, testValue);
-        }
-
-        [Test]
-        public void CanReadJsonObjectArray()
-        {
-            var jsonFile = new JSONFile(FullFilePath);
-            var jsonReader = new JSONReader(jsonFile);
-            var objectKey = "ObjectWithAnArray";
-            var arrayKey = "ObjectArray";
-            var expectedValue = new List<string>()
-            {
-                "HealthPotion",
-                "InfinityEdge"
-            };
-
-            var testValue = jsonReader.ReadJsonObjectArray(objectKey, arrayKey);
-
-
-            Assert.AreEqual(expectedValue, testValue);
-        }
-
-        [Test]
-        public void CanReadArrayOfObjects()
-        {
-            var jsonFile = new JSONFile(FullFilePath);
-            var jsonReader = new JSONReader(jsonFile);
-            var arrayKey = "ArrayOfObjects";
-
-            var expectedValue = JArray.Parse(@"[{
-            'Name': 'QuinnAndValor',
-            'Kingdom': {
-                'State': 'Demacia',
-                'Street': '1 Eagle St',
-                'ZipCode': '02903'
-            }
-        },{
-            'Name': 'Caitlyn',
-            'Kingdom': {
-                'State': 'Piltover',
-                'Street': '1 Police Way',
-                'ZipCode': '02907'
-            }
-        }]
-        ");
-
-            var testValue = jsonReader.ReadArrayOfJsonObjects(arrayKey);
-
-            Assert.IsTrue(JToken.DeepEquals(testValue, expectedValue));
-        }
-
-        private static JSONReader CreateJSONReader(JSONFile jsonFile)
-        {
-            return new JSONReader(jsonFile);
-        }
-
-        private static JSONFile CreateJSONFile(string filePath)
-        {
-            if (string.IsNullOrEmpty(filePath))
-            {
-                return new JSONFile();
-            }
-            else
-            {
-                return new JSONFile(filePath);
-            }
+            Assert.Throws(typeof(ArgumentException), (() => new JSONFile(folderPath, fileName)));
         }
     }
 }
