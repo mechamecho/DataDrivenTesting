@@ -1,3 +1,4 @@
+using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.IO;
@@ -116,6 +117,35 @@ namespace TestDataAccess.Tests
 
 
             Assert.AreEqual(expectedValue, testValue);
+        }
+
+        [Test]
+        public void CanReadArrayOfObjects()
+        {
+            var jsonFile = new JSONFile(FullFilePath);
+            var jsonReader = new JSONReader(jsonFile);
+            var arrayKey = "ArrayOfObjects";
+
+            var expectedValue = JArray.Parse(@"[{
+            'Name': 'QuinnAndValor',
+            'Kingdom': {
+                'State': 'Demacia',
+                'Street': '1 Eagle St',
+                'ZipCode': '02903'
+            }
+        },{
+            'Name': 'Caitlyn',
+            'Kingdom': {
+                'State': 'Piltover',
+                'Street': '1 Police Way',
+                'ZipCode': '02907'
+            }
+        }]
+        ");
+
+            var testValue = jsonReader.ReadArrayOfJsonObjects(arrayKey);
+
+            Assert.IsTrue(JToken.DeepEquals(testValue, expectedValue));
         }
 
         private static JSONReader CreateJSONReader(JSONFile jsonFile)
