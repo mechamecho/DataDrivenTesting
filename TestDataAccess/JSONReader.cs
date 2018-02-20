@@ -156,5 +156,17 @@ namespace TestDataAccess
 
             return finalArray;
         }
+
+        public JArray ReadArrayOfJsonObjects(string arrayKey)
+        {
+            var jObjectOfJsonFile = this.ConvertJSONFileToJObject();
+            var jArrayofObjects = (JArray)jObjectOfJsonFile.GetValue(arrayKey);
+
+
+
+            return jArrayofObjects;
+
+
+        }
     }
 }
