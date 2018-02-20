@@ -15,7 +15,7 @@ namespace TestDataAccess.Tests
         private const string JsonFileName = "testData.json";
         private static readonly string FullFilePath = $"{RootDirectory}{Path.DirectorySeparatorChar}{JsonFileName}";
 
-        [TestCase]
+        [Test]
         public void CanCreateEmptyJSONFile()
         {
             Assert.DoesNotThrow(() =>
@@ -24,7 +24,7 @@ namespace TestDataAccess.Tests
             });
         }
 
-        [TestCase]
+        [Test]
         public void CanCreateNewJSONFile()
         {
             Assert.DoesNotThrow(() =>
@@ -33,7 +33,7 @@ namespace TestDataAccess.Tests
             });
         }
 
-        [TestCase]
+        [Test]
         public void CanCreatesNewJSONReader()
         {
             var jsonFile = CreateJSONFile(FullFilePath);
@@ -46,7 +46,7 @@ namespace TestDataAccess.Tests
             });
         }
 
-        [TestCase]
+        [Test]
         public void CanReadJSONSingleProperty()
         {
             var jsonFile = new JSONFile(FullFilePath);
@@ -60,7 +60,7 @@ namespace TestDataAccess.Tests
             Assert.AreEqual(testValue, expectedValue);
         }
 
-        [TestCase]
+        [Test]
         public void CanReadJSONArray()
         {
             var jsonFile = new JSONFile(FullFilePath);
