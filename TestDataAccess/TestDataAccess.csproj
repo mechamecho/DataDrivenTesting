@@ -49,7 +49,6 @@
   <ItemGroup>
     <Compile Include="JSONFile.cs" />
     <Compile Include="JSONReader.cs" />
-    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
