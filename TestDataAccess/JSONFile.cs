@@ -44,8 +44,6 @@ namespace TestDataAccess
             {
                 throw new FormatException($"File Path is not in the correct format or the File doesn't exist {fullPath} .");
             }
-
-            //FilePathIsFullAndExists();
         }
 
         private bool FilePathIsFullAndExists(string fullPath)
@@ -61,15 +59,5 @@ namespace TestDataAccess
             return (Directory.GetParent(fullPath).ToString());
         }
 
-        //private string FilePathIsFullAndExists()
-        //{
-        //    var qaDirectory = "QA Automation\\";
-        //    var testDataDirectory = "TestData\\";
-
-        //    return (_name.Contains(qaDirectory) ? "" : $"{qaDirectory}\\") +
-        //            (_name.Contains("TestCases\\") ?
-        //            "" : (_name.Contains("TestCase\\") ?
-        //            "" : (_name.Contains(testDataDirectory) ? "" : testDataDirectory)));
-        //}
     }
 }
