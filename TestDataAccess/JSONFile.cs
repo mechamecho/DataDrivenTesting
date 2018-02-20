@@ -44,8 +44,6 @@ namespace TestDataAccess
             {
                 throw new FormatException($"File Path is not in the correct format or the File doesn't exist {fullPath} .");
             }
-
-            //FilePathIsFullAndExists();
         }
 
         private bool FilePathIsFullAndExists(string fullPath)
