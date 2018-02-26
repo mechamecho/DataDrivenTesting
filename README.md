@@ -10,15 +10,21 @@ This project is for learning purposes. Specifically to learn how to create a dat
   This class represents a JSON file. An instance is created using the fullpath(including file name), or using the path and the file name.
 The path is validated in the constructor, to make sure the file exists and the path and name are in the correct format and not null.
   Example:
-  ```
+  ```C#
+  // Constructor 1# (Accepts full path):
   var jsonFile = new JSONFile("C:/test.json");
+  
+  // Constructor 2# (Accepts parent folder, and filename):
   var jsonFile = new JSONFile("C:/Projects", "testdata.json");
   ```
 
 * **JSONReader Class** :
   This class represents a JSONReader for a specific JSONFile. The constructor must be provided with an instance of the JSONFile class that represents the JSON File that contains the test data.
     Example:
-    `var JSONReader = new JSONReader(jsonFile);`
+    ```C#
+    // Constructor 1#:
+    var JSONReader = new JSONReader(jsonFile);
+    ```
      
      where jsonFile is an instance of the JSONFile class.
 
