@@ -6,7 +6,7 @@ It is written in C#, and it is assumed that the testing data will be present in 
 
 In order to be able to read the test data efficiently from the JSON file, we used [Newtonsoft's JSON.Net Library](https://www.newtonsoft.com/json/help/html/Introduction.htm).
 
-For the sake of encapsulation, and seperatation of concerns we created a JSONFile class, with 2 constructors. This class is the only parameter that constuctors for the JSONReader class constructor takes in order to be able to read the data from the JSON file using the different available methods in the class.
+For the sake of encapsulation, and seperatation of concerns we created a JSONFile class, with 2 constructors. The instances of this class are the only parameter that the constuctor of the JSONReader class takes in order to be able to read the data from the JSONFile instance provided using the different available methods in the JSONReader class.
 
 The entire process of building these classes was aided by the use of Test Driven Development.
 
