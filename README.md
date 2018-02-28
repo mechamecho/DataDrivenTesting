@@ -1,6 +1,14 @@
 # Data Driven Testing
 
+##Overview:
 This project is for learning purposes. Specifically to learn how to create a data driven testing framework using TDD. 
+It is written in C#, and it is assumed that the testing data will be present in a JSON file. So we first started working on creating a framework that would enable us to retrieve the test data from the JSON File using inputs like the property and index of the needed data for any given test. 
+
+In order to be able to read the test data efficiently from the JSON file, we used [Newtonsoft's JSON.Net Library](https://www.newtonsoft.com/json/help/html/Introduction.htm).
+
+For the sake of encapsulation, and seperatation of concerns we created a JSONFile class, with 2 constructors. This class is the only parameter that constuctors for the JSONReader class constructor takes in order to be able to read the data from the JSON file using the different available methods in the class.
+
+The entire process of building these classes was aided by the use of Test Driven Development.
 
 ## Structure of Project
 ### TestDataAccess project:
