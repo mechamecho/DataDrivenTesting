@@ -38,12 +38,17 @@ namespace TestDataAccess
 
         public JSONFile(string fullPath)
         {
-            if (!String.IsNullOrEmpty(fullPath) && FilePathIsFullAndExists(fullPath))
-                FilePath = fullPath;
-            else
-            {
-                throw new FormatException($"File Path is not in the correct format or the File doesn't exist {fullPath} .");
-            }
+            if (!String.IsNullOrEmpty(fullPath))
+                if (FilePathIsFullAndExists(fullPath))
+                {
+                    FilePath = fullPath;
+                }
+
+                else
+                {
+                    throw new FormatException(
+                        $"File Path is not in the correct format or the File doesn't exist {fullPath} .");
+                }
         }
 
         private bool FilePathIsFullAndExists(string fullPath)
