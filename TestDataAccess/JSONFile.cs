@@ -11,14 +11,14 @@ namespace TestDataAccess
 
         public JSONFile(string path, string name)
         {
-            if (name != null)
+            if (!String.IsNullOrEmpty(name))
                 _name = name;
             else
             {
                 throw new ArgumentException($"File name can't be null '{name}' .");
             }
 
-            if (path != null)
+            if (!String.IsNullOrEmpty(path))
                 FilePath = $"{path}{_name}";
             else
             {
