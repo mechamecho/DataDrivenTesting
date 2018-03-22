@@ -15,14 +15,14 @@ namespace TestDataAccess
                 _name = name;
             else
             {
-                throw new ArgumentException($"File name can't be null '{name}' .");
+                throw new ArgumentException($"File name can't be null or empty '{name}'.");
             }
 
             if (!String.IsNullOrEmpty(path))
                 FilePath = $"{path}{_name}";
             else
             {
-                throw new ArgumentException($"File Path can't be null '{FilePath}' .");
+                throw new ArgumentException($"File Path can't be null or empty '{FilePath}'.");
             }
 
             if (!FilePathIsFullAndExists(FilePath))
