@@ -38,7 +38,7 @@ namespace TestDataAccess
 
         public JSONFile(string fullPath)
         {
-            if (fullPath != null && FilePathIsFullAndExists(fullPath))
+            if (!String.IsNullOrEmpty(fullPath) && FilePathIsFullAndExists(fullPath))
                 FilePath = fullPath;
             else
             {
