@@ -11,18 +11,18 @@ namespace TestDataAccess
 
         public JSONFile(string path, string name)
         {
-            if (name != null)
+            if (!String.IsNullOrEmpty(name))
                 _name = name;
             else
             {
-                throw new ArgumentException($"File name can't be null '{name}' .");
+                throw new ArgumentException($"File name can't be null or empty '{name}'.");
             }
 
-            if (path != null)
+            if (!String.IsNullOrEmpty(path))
                 FilePath = $"{path}{_name}";
             else
             {
-                throw new ArgumentException($"File Path can't be null '{FilePath}' .");
+                throw new ArgumentException($"File Path can't be null or empty '{FilePath}'.");
             }
 
             if (!FilePathIsFullAndExists(FilePath))
@@ -38,12 +38,17 @@ namespace TestDataAccess
 
         public JSONFile(string fullPath)
         {
-            if (fullPath != null && FilePathIsFullAndExists(fullPath))
-                FilePath = fullPath;
-            else
-            {
-                throw new FormatException($"File Path is not in the correct format or the File doesn't exist {fullPath} .");
-            }
+            if (!String.IsNullOrEmpty(fullPath))
+                if (FilePathIsFullAndExists(fullPath))
+                {
+                    FilePath = fullPath;
+                }
+
+                else
+                {
+                    throw new FormatException(
+                        $"File Path is not in the correct format or the File doesn't exist {fullPath} .");
+                }
         }
 
         private bool FilePathIsFullAndExists(string fullPath)
